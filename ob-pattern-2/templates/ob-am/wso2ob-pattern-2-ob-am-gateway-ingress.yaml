@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ template "ob-pattern-2.resource.prefix" . }}-ob-am-gateway-ingress
@@ -30,6 +30,9 @@ spec:
     http:
       paths:
       - path: /
+        pathType: Prefix
         backend:
-          serviceName: {{ template "ob-pattern-2.resource.prefix" . }}-ob-am-service
-          servicePort: 8243
+          service:
+            name: {{ template "ob-pattern-2.resource.prefix" . }}-ob-am-service
+            port:
+              number: 8243
